@@ -1,8 +1,8 @@
-const choices = ['Rock', 'Paper', 'Scissors']
+const CHOICES = ['Rock', 'Paper', 'Scissors']
 
 function getComputerChoice() {
   const randomChoice = Math.floor(Math.random() * 3)
-  return choices[randomChoice]
+  return CHOICES[randomChoice]
 }
 
 function singleRound(playerSelection, computerSelection) {
@@ -11,17 +11,17 @@ function singleRound(playerSelection, computerSelection) {
 
   if (playerSelection === computerSelection) {
     return [-1, "It's a tie!"]
-  } else if (playerSelection === 'rock' && computerSelection === 'scissor') {
+  } else if (playerSelection === 'rock' && computerSelection === 'scissors') {
     return [1, 'You Win! Rock beats Scissors!']
   } else if (playerSelection === 'rock' && computerSelection === 'paper') {
     return [0, 'You Lose! Paper beats Rock!']
   } else if (playerSelection === 'paper' && computerSelection === 'rock') {
     return [1, 'You Win! Paper beats Rock!']
-  } else if (playerSelection === 'paper' && computerSelection === 'scissor') {
+  } else if (playerSelection === 'paper' && computerSelection === 'scissors') {
     return [0, 'You Lose! Scissors beats Paper!']
-  } else if (playerSelection === 'scissor' && computerSelection === 'paper') {
+  } else if (playerSelection === 'scissors' && computerSelection === 'paper') {
     return [1, 'You Win! Scissors beats Paper!']
-  } else if (playerSelection === 'scissor' && computerSelection === 'rock') {
+  } else if (playerSelection === 'scissors' && computerSelection === 'rock') {
     return [0, 'You Lose! Rock beats Scissors!']
   }
 }
