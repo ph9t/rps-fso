@@ -1,4 +1,4 @@
-const CHOICES = ['Rock', 'Paper', 'Scissors']
+const CHOICES = ['rock', 'paper', 'scissors']
 
 function getComputerChoice() {
   const randomChoice = Math.floor(Math.random() * 3)
@@ -28,27 +28,34 @@ function game() {
   let userScore = 0
   let computerScore = 0
 
+  const rpsEmoji = {
+    rock: '🪨',
+    paper: '📃',
+    scissors: '✂️',
+  }
+
   while (userScore < 5 && computerScore < 5) {
     const userSelection = window.prompt(
-      'Enter your choice (rock, paper, scissor): '
+      'Enter your choice (rock, paper, scissors): '
     )
-    const computerSelection = getComputerChoice()
+    const opponentSelection = getComputerChoice()
 
-    const [userWon, message] = singleRound(userSelection, computerSelection)
+    const [userWon, message] = playSingleRound(userSelection, opponentSelection)
 
-    if (userWon === 1) {
-      userScore++
-    } else if (userWon === 0) {
-      computerScore++
-    }
+    if (userWon === 1) userScore++
+    else if (userWon === 0) computerScore++
 
+    console.log('---')
+    console.log(
+      `${rpsEmoji[userSelection]} versus ${rpsEmoji[opponentSelection]}`
+    )
     console.log(message, `[${userScore} - ${computerScore}]`)
   }
 
   if (userScore > computerScore) {
-    console.log(`You Win the game for a score of ${userScore} `)
+    console.log(`You Win the game with a score of ${userScore} `)
   } else if (userScore < computerScore) {
-    console.log(`You Lose the game for a score of ${userScore}`)
+    console.log(`You Lose the game with a score of ${userScore}`)
   } else {
     console.log('Player and Computer have a score tie!')
   }
