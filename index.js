@@ -6,23 +6,21 @@ function getComputerChoice() {
 }
 
 function singleRound(playerSelection, computerSelection) {
-  playerSelection = playerSelection.toLowerCase()
-  computerSelection = computerSelection.toLowerCase()
+  playerSelection = playerSelection.toLowerCase().trim()
+  computerSelection = computerSelection.toLowerCase().trim()
+
+  const beatsWho = {
+    rock: 'scissors',
+    paper: 'rock',
+    scissors: 'paper',
+  }
 
   if (playerSelection === computerSelection) {
     return [-1, "It's a tie!"]
-  } else if (playerSelection === 'rock' && computerSelection === 'scissors') {
-    return [1, 'You Win! Rock beats Scissors!']
-  } else if (playerSelection === 'rock' && computerSelection === 'paper') {
-    return [0, 'You Lose! Paper beats Rock!']
-  } else if (playerSelection === 'paper' && computerSelection === 'rock') {
-    return [1, 'You Win! Paper beats Rock!']
-  } else if (playerSelection === 'paper' && computerSelection === 'scissors') {
-    return [0, 'You Lose! Scissors beats Paper!']
-  } else if (playerSelection === 'scissors' && computerSelection === 'paper') {
-    return [1, 'You Win! Scissors beats Paper!']
-  } else if (playerSelection === 'scissors' && computerSelection === 'rock') {
-    return [0, 'You Lose! Rock beats Scissors!']
+  } else if (beatsWho[playerSelection] === computerSelection) {
+    return [1, `You Win! ${playerSelection} beats ${computerSelection}`]
+  } else {
+    return [0, `You Lose! ${computerSelection} beats ${playerSelection}`]
   }
 }
 
