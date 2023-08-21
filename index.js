@@ -5,7 +5,7 @@ function getComputerChoice() {
   return CHOICES[randomChoice]
 }
 
-function singleRound(playerSelection, computerSelection) {
+function playSingleRound(playerSelection, computerSelection) {
   playerSelection = playerSelection.toLowerCase().trim()
   computerSelection = computerSelection.toLowerCase().trim()
 
