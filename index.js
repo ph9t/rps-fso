@@ -61,4 +61,11 @@ function game() {
   }
 }
 
-game()
+let currentlySelected = document.querySelector('#shape-menu button')
+currentlySelected.textContent = '▶ ' + currentlySelected.textContent
+
+function changeSelected(newSelectedOption) {
+  currentlySelected.textContent = currentlySelected.textContent.split(' ')[1]
+  currentlySelected = newSelectedOption
+  currentlySelected.textContent = '▶ ' + currentlySelected.textContent
+}
