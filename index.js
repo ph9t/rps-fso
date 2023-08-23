@@ -69,3 +69,9 @@ function changeSelected(newSelectedOption) {
   currentlySelected = newSelectedOption
   currentlySelected.textContent = '▶ ' + currentlySelected.textContent
 }
+
+const menuOptions = document.querySelectorAll('#shape-menu button')
+
+menuOptions.forEach(option => {
+  option.addEventListener('mouseover', e => changeSelected(e.target))
+})
