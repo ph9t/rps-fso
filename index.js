@@ -75,3 +75,36 @@ const menuOptions = document.querySelectorAll('#shape-menu button')
 menuOptions.forEach(option => {
   option.addEventListener('mouseover', e => changeSelected(e.target))
 })
+
+function getNextNthSibling(n) {
+  const sign = n < 0 ? 'neg' : 'pos'
+  n = Math.abs(n)
+
+  while (n > 0) {
+    const sibling =
+      sign === 'neg'
+        ? currentlySelected.previousElementSibling
+        : currentlySelected.nextElementSibling
+
+    if (!sibling) return
+    changeSelected(sibling)
+
+    n--
+  }
+}
+
+window.addEventListener('keydown', e => {
+  const keyValue = {
+    KeyH: -1,
+    KeyJ: 2,
+    KeyK: -2,
+    KeyL: 1,
+  }
+
+  keyValue['ArrowLeft'] = keyValue.KeyH
+  keyValue['ArrowRight'] = keyValue.KeyL
+  keyValue['ArrowDown'] = keyValue.KeyJ
+  keyValue['ArrowUp'] = keyValue.KeyK
+
+  getNextNthSibling(keyValue[e.code])
+})
