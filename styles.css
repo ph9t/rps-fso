@@ -1,3 +1,55 @@
+body {
+  width: 900px;
+  height: 55vh;
+
+  padding: 20px;
+  border: double 3px black;
+  margin: 0 auto;
+
+  font-family: Monocraft;
+}
+
+header {
+  text-align: center;
+}
+
+.binding {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.pick-menu,
+.score-menu {
+  display: flex;
+  text-align: center;
+}
+
+.pick-menu p,
+.score-menu p {
+  width: 50%;
+}
+
+#player-score, #computer-score {
+  color: #F8C8DC;
+}
+
+#shape-menu {
+  margin: 20px auto;
+  width: 300px;
+  border: solid 2px black;
+  display: flex;
+  flex-wrap: wrap;
+
+  justify-content: space-evenly;
+}
+
+#shape-menu button {
+  text-align: left;
+  width: 70px;
+  height: 30px;
+  margin: 0 30px;
+}
+
 button,
 input[type='submit'],
 input[type='reset'] {
@@ -10,14 +62,7 @@ input[type='reset'] {
   outline: inherit;
 }
 
-.shape-menu {
-  display: flex;
-  width: 300px;
-  flex-wrap: wrap;
-  gap: 50px;
-  justify-content: space-between;
-  align-items: center;
-
-  /* temporary property */
-  border: solid 3px black;
+#round-message,
+#final-message {
+  text-align: center;
 }
