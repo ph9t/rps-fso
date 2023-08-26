@@ -1,4 +1,23 @@
 const CHOICES = ['rock', 'paper', 'scissors']
+const equivalentEmoji = {
+  rock: '🪨',
+  paper: '📃',
+  scissors: '✂️',
+}
+
+const controlStepVal = {
+  KeyH: -1,
+  KeyJ: 2,
+  KeyK: -2,
+  KeyL: 1,
+}
+
+let existingTimeout = null
+
+controlStepVal['ArrowLeft'] = controlStepVal.KeyH
+controlStepVal['ArrowRight'] = controlStepVal.KeyL
+controlStepVal['ArrowDown'] = controlStepVal.KeyJ
+controlStepVal['ArrowUp'] = controlStepVal.KeyK
 
 function getComputerChoice() {
   const randomChoice = Math.floor(Math.random() * 3)
