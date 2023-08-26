@@ -1,27 +1,36 @@
-body {
+.rps-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 85vh;
+}
+
+.rps-game {
   width: 900px;
-  height: 55vh;
+  min-height: 58vh;
 
   padding: 20px;
   border: double 3px black;
-  margin: 0 auto;
 
   font-family: Monocraft;
 }
 
-header {
+h1 {
   text-align: center;
 }
 
 .binding {
   text-align: center;
   margin-bottom: 35px;
+
+  font-size: 12px;
 }
 
 .pick-menu,
 .score-menu {
   display: flex;
   text-align: center;
+  flex-wrap: wrap;
 }
 
 .pick-menu p,
@@ -29,8 +38,9 @@ header {
   width: 50%;
 }
 
-#player-score, #computer-score {
-  color: #F8C8DC;
+#player-score,
+#computer-score {
+  color: #f8c8dc;
 }
 
 #shape-menu {
@@ -50,6 +60,11 @@ header {
   margin: 0 30px;
 }
 
+#shape-menu button:disabled {
+  color: grey;
+  cursor: default;
+}
+
 button,
 input[type='submit'],
 input[type='reset'] {
@@ -62,7 +77,59 @@ input[type='reset'] {
   outline: inherit;
 }
 
+#general-message,
 #round-message,
 #final-message {
   text-align: center;
+}
+
+#player-pick {
+  position: relative;
+}
+
+.damaged {
+  animation: take-damage 0.5s ease-in;
+}
+
+@keyframes take-damage {
+  25% {
+    background-color: red;
+
+    top: -8px;
+    bottom: 0px;
+    left: -8px;
+    right: 0px;
+  }
+
+  50% {
+    top: 0px;
+    bottom: 10px;
+    left: 0px;
+    right: 10px;
+  }
+
+  75% {
+    top: -5px;
+    bottom: 0px;
+    left: -5px;
+    right: 0px;
+  }
+
+  100% {
+    background-color: inherit;
+
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+  }
+}
+
+button {
+  position: relative;
+}
+
+button #cursor {
+  position: absolute;
+  left: -18px;
 }

@@ -7,44 +7,46 @@
   </head>
 
   <body>
-    <header>
-      <h1>Rock Paper Scissors</h1>
-    </header>
+    <main class="rps-container">
+      <div class="rps-game">
+        <h1>Rock Paper Scissors</h1>
 
-    <main>
-      <p class="binding">
-        Controls: h/← (left), l/→ (right), j/↓ (down), k/↑ (up)
-      </p>
+        <p class="binding">
+          Controls: h/← (left), l/→ (right), j/↓ (down), k/↑ (up), Enter
+          (select)
+        </p>
 
-      <div class="pick-menu">
-        <p class="player-selected">
-          Player pick: <span id="player-pick">�</span>
-        </p>
-        <p class="player-selected">
-          Computer Pick: <span id="computer-pick">�</span>
-        </p>
+        <div class="pick-menu">
+          <p class="player-selected">
+            Player pick: <span id="player-pick">�</span>
+          </p>
+          <p class="player-selected">
+            Computer Pick: <span id="computer-pick">�</span>
+          </p>
+        </div>
+
+        <div class="score-menu">
+          <p class="player-score-menu">
+            Player score: <span id="player-score">☆ ☆ ☆ ☆ ☆</span>
+          </p>
+          <p class="computer-score-menu">
+            Computer score: <span id="computer-score">☆ ☆ ☆ ☆ ☆</span>
+          </p>
+        </div>
+
+        <div id="shape-menu">
+          <button id="rock-item">Rock</button>
+          <button id="paper-item">Paper</button>
+          <button id="scissors-item">Scissors</button>
+          <button id="main-item">Start</button>
+        </div>
+
+        <p id="general-message"></p>
+        <p id="round-message"></p>
+
+        <audio data-key="0" src="./sounds/damage.wav"></audio>
+        <audio data-key="1" src="./sounds/winRound.wav"></audio>
       </div>
-
-      <div class="score-menu">
-        <p class="player-score-menu">
-          Player score: <span id="player-score">☆ ☆ ☆ ☆ ☆</span>
-        </p>
-        <p class="computer-score-menu">
-          Computer score: <span id="computer-score">☆ ☆ ☆ ☆ ☆</span>
-        </p>
-      </div>
-
-      <div id="shape-menu">
-        <button id="rock-item">Rock</button>
-        <button id="paper-item">Paper</button>
-        <button id="scissors-item">Scissors</button>
-        <button id="quit-item">Quit</button>
-      </div>
-
-      <p id="round-message">You Win! Paper beats Rock!</p>
-      <p id="final-message"></p>
-
-      <audio data-key="1" src="./sounds/damage.mp3"></audio>
     </main>
     <script src="index.js"></script>
   </body>
