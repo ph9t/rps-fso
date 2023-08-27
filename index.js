@@ -37,9 +37,15 @@ function playSingleRound(playerSelection, computerSelection) {
   if (playerSelection === computerSelection) {
     return [-1, "It's a tie!"]
   } else if (beatsWho[playerSelection] === computerSelection) {
-    return [1, `You Win! ${playerSelection} beats ${computerSelection}`]
+    return [
+      1,
+      `You Win! [${equivalentEmoji[playerSelection]} beats ${equivalentEmoji[computerSelection]}]`,
+    ]
   } else {
-    return [0, `You Lose! ${computerSelection} beats ${playerSelection}`]
+    return [
+      0,
+      `You Lose! [${equivalentEmoji[computerSelection]} beats ${equivalentEmoji[playerSelection]}]`,
+    ]
   }
 }
 
