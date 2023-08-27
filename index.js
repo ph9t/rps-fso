@@ -80,6 +80,10 @@ function getNextNthSibling(selectedOption, n) {
   return selectedOption
 }
 
+function getScoreView(score) {
+  return '★ '.repeat(score) + '☆ '.repeat(5 - score)
+}
+
 function game() {
   let userScore = 0
   let computerScore = 0
