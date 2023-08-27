@@ -101,6 +101,12 @@ function displayMessage(
   if (type === 'round') existingTimeout = timeoutId
 }
 
+function toggleMenuDisable(nodeList, value) {
+  for (let i = 0; i < nodeList.length - 1; i++) {
+    nodeList[i].disabled = value
+  }
+}
+
 function game() {
   let userScore = 0
   let computerScore = 0
