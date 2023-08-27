@@ -84,6 +84,23 @@ function getScoreView(score) {
   return '★ '.repeat(score) + '☆ '.repeat(5 - score)
 }
 
+function displayMessage(
+  textElement,
+  textValue,
+  duration = 5000,
+  type = 'general'
+) {
+  if (type === 'round' && existingTimeout) clearTimeout(existingTimeout)
+  textElement.textContent = textValue
+
+  const timeoutId = setTimeout(() => {
+    textElement.textContent = ''
+  }, duration)
+
+  // overwrite existing timeout
+  if (type === 'round') existingTimeout = timeoutId
+}
+
 function game() {
   let userScore = 0
   let computerScore = 0
