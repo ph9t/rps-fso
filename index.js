@@ -108,63 +108,165 @@ function toggleMenuDisable(nodeList, value) {
 }
 
 function game() {
-  let userScore = 0
+  let gameStarted = false
+  let playerScore = 0
   let computerScore = 0
 
-  const rpsEmoji = {
-    rock: '🪨',
-    paper: '📃',
-    scissors: '✂️',
+  let lastRoundMessage = ''
+  let roundMessageRepeat = 0
+
+  const playerPickDisplay = document.getElementById('player-pick')
+  const computerPickDisplay = document.getElementById('computer-pick')
+
+  const playerScoreDisplay = document.getElementById('player-score')
+  const computerScoreDisplay = document.getElementById('computer-score')
+
+  const generalMessageDisplay = document.getElementById('general-message')
+  const roundMessageDisplay = document.getElementById('round-message')
+
+  const mainItem = document.getElementById('main-item')
+
+  let currentlySelected = mainItem
+  const menuOptions = document.querySelectorAll('#shape-menu button')
+  const menuOptionValue = {
+    'rock-item': 'rock',
+    'paper-item': 'paper',
+    'scissors-item': 'scissors',
   }
 
-  while (userScore < 5 && computerScore < 5) {
-    const userSelection = window.prompt(
-      'Enter your choice (rock, paper, scissors): '
-    )
+  toggleMenuDisable(menuOptions, true)
+  changeVisuallySelected(undefined, currentlySelected)
+  displayMessage(generalMessageDisplay, "Select 'Start' to play game", 2000)
+
+  function gameOver() {
+    gameStarted = false
+    toggleMenuDisable(menuOptions, true)
+
+    playerPickDisplay.textContent = '�'
+    computerPickDisplay.textContent = '�'
+
+    /* playerScoreDisplay.textContent = getScoreView(0)
+    computerScoreDisplay.textContent = getScoreView(0) */
+
+    mainItem.textContent = 'Restart'
+
+    if (currentlySelected !== mainItem) {
+      // carry out if the game ended thru game playing (main item not selected)
+      currentlySelected = changeVisuallySelected(currentlySelected, mainItem)
+    } else {
+      // carry out if the game ended by clicking 'Quit'
+      changeVisuallySelected(undefined, mainItem)
+    }
+
+    let finalMessage
+
+    if (playerScore < 5 && computerScore < 5) {
+      finalMessage = 'What a sore quitter! ⁑ρ'
+    } else {
+      if (playerScore > computerScore) finalMessage = 'You Win ⚐ the game!'
+      else finalMessage = 'You Lose ☠ the game!'
+    }
+
+    displayMessage(generalMessageDisplay, finalMessage)
+
+    playerScore = 0
+    computerScore = 0
+  }
+
+  function checkRound(e) {
+    e.stopPropagation()
+
+    // return immediately if the event comes not from a pressed 'Enter' key or a mouse click
+    const notKeyboardTargeting = e.type === 'keydown' && e.code !== 'Enter'
+    if (e.type !== 'click' && notKeyboardTargeting) return
+
+    if (!gameStarted) {
+      toggleMenuDisable(menuOptions, false)
+      mainItem.textContent = 'Quit'
+      changeVisuallySelected(undefined, mainItem)
+
+      gameStarted = true
+      return
+    }
+
+    const isQuitting =
+      e.currentTarget.id === 'main-item' ||
+      (currentlySelected.id === 'main-item' && e.code === 'Enter')
+
+    if (gameStarted && isQuitting) {
+      gameOver()
+      return
+    }
+
+    const userSelection = menuOptionValue[currentlySelected.id]
     const opponentSelection = getComputerChoice()
+
+    playerPickDisplay.textContent = equivalentEmoji[userSelection]
+    computerPickDisplay.textContent = equivalentEmoji[opponentSelection]
 
     const [userWon, message] = playSingleRound(userSelection, opponentSelection)
 
-    if (userWon === 1) userScore++
-    else if (userWon === 0) computerScore++
+    if (lastRoundMessage === message) roundMessageRepeat++
+    else {
+      roundMessageRepeat = 0
+      lastRoundMessage = ''
+    }
 
-    console.log('---')
-    console.log(
-      `${rpsEmoji[userSelection]} versus ${rpsEmoji[opponentSelection]}`
+    lastRoundMessage = message
+
+    const additionalMessage = roundMessageRepeat
+      ? ' (x' + (roundMessageRepeat + 1) + ')'
+      : ''
+
+    displayMessage(
+      roundMessageDisplay,
+      `${message}${additionalMessage}`,
+      2000,
+      'round'
     )
-    console.log(message, `[${userScore} - ${computerScore}]`)
+
+    const soundToPlay = document.querySelector(`audio[data-key="${userWon}"]`)
+
+    if (soundToPlay) {
+      soundToPlay.currentTime = 0
+      soundToPlay.play()
+    }
+
+    if (userWon === 1) playerScore++
+    else if (userWon === 0) {
+      computerScore++
+      playerPickDisplay.classList.add('damaged')
+    }
+
+    playerScoreDisplay.textContent = getScoreView(playerScore)
+    computerScoreDisplay.textContent = getScoreView(computerScore)
+
+    if (playerScore === 5 || computerScore === 5) gameOver()
   }
 
-  if (userScore > computerScore) {
-    console.log(`You Win the game with a score of ${userScore} `)
-  } else if (userScore < computerScore) {
-    console.log(`You Lose the game with a score of ${userScore}`)
-  } else {
-    console.log('Player and Computer have a score tie!')
-  }
+  menuOptions.forEach(option => {
+    option.addEventListener('mouseenter', e => {
+      if (!gameStarted) return
+      currentlySelected = changeVisuallySelected(currentlySelected, e.target)
+    })
+
+    option.addEventListener('click', checkRound, { capture: true })
+  })
+
+  window.addEventListener('keydown', checkRound)
+
+  window.addEventListener('keydown', e => {
+    if (!gameStarted) return
+
+    const stepSize = controlStepVal[e.code]
+    const nthSibling = getNextNthSibling(currentlySelected, stepSize)
+
+    currentlySelected = changeVisuallySelected(currentlySelected, nthSibling)
+  })
+
+  playerPickDisplay.addEventListener('animationend', () => {
+    playerPickDisplay.classList.remove('damaged')
+  })
 }
 
-let currentlySelected = document.querySelector('#shape-menu button')
-currentlySelected.textContent = '▶ ' + currentlySelected.textContent
-
-const menuOptions = document.querySelectorAll('#shape-menu button')
-
-menuOptions.forEach(option => {
-  option.addEventListener('mouseover', e => changeSelected(e.target))
-})
-
-window.addEventListener('keydown', e => {
-  const keyValue = {
-    KeyH: -1,
-    KeyJ: 2,
-    KeyK: -2,
-    KeyL: 1,
-  }
-
-  keyValue['ArrowLeft'] = keyValue.KeyH
-  keyValue['ArrowRight'] = keyValue.KeyL
-  keyValue['ArrowDown'] = keyValue.KeyJ
-  keyValue['ArrowUp'] = keyValue.KeyK
-
-  getNextNthSibling(keyValue[e.code])
-})
+game()
