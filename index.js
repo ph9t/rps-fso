@@ -49,6 +49,19 @@ function playSingleRound(playerSelection, computerSelection) {
   }
 }
 
+function changeVisuallySelected(prevSelectedOption, newSelectedOption) {
+  if (prevSelectedOption) {
+    const optionText = document.getElementById('option-text')
+    prevSelectedOption.innerHTML = optionText.textContent
+  }
+
+  newSelectedOption.innerHTML =
+    '<span id="cursor">▶</span>' +
+    `<span id="option-text">${newSelectedOption.textContent}</span>`
+
+  return newSelectedOption
+}
+
 function game() {
   let userScore = 0
   let computerScore = 0
@@ -88,12 +101,6 @@ function game() {
 
 let currentlySelected = document.querySelector('#shape-menu button')
 currentlySelected.textContent = '▶ ' + currentlySelected.textContent
-
-function changeSelected(newSelectedOption) {
-  currentlySelected.textContent = currentlySelected.textContent.split(' ')[1]
-  currentlySelected = newSelectedOption
-  currentlySelected.textContent = '▶ ' + currentlySelected.textContent
-}
 
 const menuOptions = document.querySelectorAll('#shape-menu button')
 
