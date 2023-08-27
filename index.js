@@ -62,6 +62,24 @@ function changeVisuallySelected(prevSelectedOption, newSelectedOption) {
   return newSelectedOption
 }
 
+function getNextNthSibling(selectedOption, n) {
+  const sign = n < 0 ? 'neg' : 'pos'
+  n = Math.abs(n)
+
+  while (n > 0) {
+    const sibling =
+      sign === 'neg'
+        ? selectedOption.previousElementSibling
+        : selectedOption.nextElementSibling
+
+    if (!sibling) return selectedOption
+    selectedOption = sibling
+    n--
+  }
+
+  return selectedOption
+}
+
 function game() {
   let userScore = 0
   let computerScore = 0
@@ -107,23 +125,6 @@ const menuOptions = document.querySelectorAll('#shape-menu button')
 menuOptions.forEach(option => {
   option.addEventListener('mouseover', e => changeSelected(e.target))
 })
-
-function getNextNthSibling(n) {
-  const sign = n < 0 ? 'neg' : 'pos'
-  n = Math.abs(n)
-
-  while (n > 0) {
-    const sibling =
-      sign === 'neg'
-        ? currentlySelected.previousElementSibling
-        : currentlySelected.nextElementSibling
-
-    if (!sibling) return
-    changeSelected(sibling)
-
-    n--
-  }
-}
 
 window.addEventListener('keydown', e => {
   const keyValue = {
